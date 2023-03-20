@@ -30,6 +30,9 @@ def main():
             _loss = loss.Loss(args, checkpoint) if not args.test_only else None
             t = Trainer(args, loader, _model, _loss, checkpoint)
             while not t.terminate():
+                if hasattr(torch.cuda, 'empty_cache'):  #清理cuda
+                    torch.cuda.empty_cache()
+
                 t.train()
                 t.test()
 
